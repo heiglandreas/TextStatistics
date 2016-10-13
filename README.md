@@ -8,6 +8,11 @@ Calculate text-statistics including Sylables, Flesch-Reading-Ease (english and g
 [![StyleCI](https://styleci.io/repos/70740411/shield?branch=master)](https://styleci.io/repos/70740411)
 [![Coverage Status](https://coveralls.io/repos/github/heiglandreas/TextStatistics/badge.svg?branch=master)](https://coveralls.io/github/heiglandreas/TextStatistics?branch=master)
 
+[![Latest Stable Version](https://poser.pugx.org/org_heigl/textstatistics/v/stable)](https://packagist.org/packages/org_heigl/textstatistics)
+[![Total Downloads](https://poser.pugx.org/org_heigl/textstatistics/downloads)](https://packagist.org/packages/org_heigl/textstatistics)
+[![License](https://poser.pugx.org/org_heigl/textstatistics/license)](https://packagist.org/packages/org_heigl/textstatistics)
+[![composer.lock](https://poser.pugx.org/org_heigl/textstatistics/composerlock)](https://packagist.org/packages/org_heigl/textstatistics)
+
 ## Why
 
 The one other implementation [davechild/textstatistics](https://packagist.org/packages/davechild/textstatistics)
