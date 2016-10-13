@@ -43,11 +43,23 @@ Currently these Statistics are avalable:
  * Average Syllables per word
  * Character-Count (including Whitespace)
  * Character-Count (excluding whitespace)
+ * Flesch-Kincaid Grade Level
  * Flesch-Reading-Ease for English texts
  * Flesch-Reading-Ease for German texts
+ * Flesch-Reading-Ease School-Grade measurement
  * Sentence-Count
+ * Max Syllables in Sentence
+ * Max Words in Sentence
  * Syllable-Count
+ * Wiener Sachtext-Formel 1, 2, 3 and 4
  * Word-Count
+ * Max Syllables in Word
+ * Number of words with minimum N characters
+ * Percentage of Words with minimum N characters
+ * Number of words with minimum N syllables
+ * Percentage of words with minimum N syllables
+ * Number of words with only N syllables
+ * Percentage of words with only N syllables
  
 There are Factory-Methods for each statistic available, so getting one of the statistics 
 requires the following line of code:
