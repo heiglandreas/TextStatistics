@@ -24,28 +24,21 @@
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Service;
+namespace Org_Heigl\TextStatistics\Calculator;
 
-use Org\Heigl\Hyphenator\Hyphenator;
-use Org\Heigl\Hyphenator\Options;
-use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
-use Org_Heigl\TextStatistics\Util\SyllableFilter;
+use Org_Heigl\TextStatistics\Text;
 
-class SyllableCounterFactory
+class CharacterWithoutWhitespaceCounter implements CalculatorInterface
 {
-    public static function getCalculator($locale = 'de_DE')
+    /**
+     * Do the actual calculation of a statistic
+     *
+     * @param Text $text
+     *
+     * @return mixed
+     */
+    public function calculate(Text $text)
     {
-        $o = new Options();
-        $o->setDefaultLocale($locale)
-          ->setRightMin(2)
-          ->setLeftMin(2)
-          ->setWordMin(4)
-          ->setTokenizers('Whitespace','Punctuation');
-
-        $hyphenator = new Hyphenator();
-        $hyphenator->setOptions($o);
-        $hyphenator->addFilter(new SyllableFilter());
-
-        return new SyllableCounter($hyphenator);
+        return (mb_strlen(preg_replace('/\s/um', '', $text->getPlainText())));
     }
 }

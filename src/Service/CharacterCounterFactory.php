@@ -26,26 +26,12 @@
 
 namespace Org_Heigl\TextStatistics\Service;
 
-use Org\Heigl\Hyphenator\Hyphenator;
-use Org\Heigl\Hyphenator\Options;
-use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
-use Org_Heigl\TextStatistics\Util\SyllableFilter;
+use Org_Heigl\TextStatistics\Calculator\CharacterCounter;
 
-class SyllableCounterFactory
+class CharacterCounterFactory
 {
-    public static function getCalculator($locale = 'de_DE')
+    public static function getCalculator()
     {
-        $o = new Options();
-        $o->setDefaultLocale($locale)
-          ->setRightMin(2)
-          ->setLeftMin(2)
-          ->setWordMin(4)
-          ->setTokenizers('Whitespace','Punctuation');
-
-        $hyphenator = new Hyphenator();
-        $hyphenator->setOptions($o);
-        $hyphenator->addFilter(new SyllableFilter());
-
-        return new SyllableCounter($hyphenator);
+        return new CharacterCounter();
     }
 }

@@ -26,26 +26,16 @@
 
 namespace Org_Heigl\TextStatistics\Service;
 
-use Org\Heigl\Hyphenator\Hyphenator;
-use Org\Heigl\Hyphenator\Options;
-use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
-use Org_Heigl\TextStatistics\Util\SyllableFilter;
+use Org_Heigl\TextStatistics\Calculator\AverageSyllablesPerWordCalculator;
+use Org_Heigl\TextStatistics\Calculator\WordCounter;
 
-class SyllableCounterFactory
+class AverageSyllablesPerWordCalculatorFactory
 {
-    public static function getCalculator($locale = 'de_DE')
+    public static function getCalculator($language = 'de_DE')
     {
-        $o = new Options();
-        $o->setDefaultLocale($locale)
-          ->setRightMin(2)
-          ->setLeftMin(2)
-          ->setWordMin(4)
-          ->setTokenizers('Whitespace','Punctuation');
+        $wordCounter = new WordCounter();
+        $syllableCounter = SyllableCounterFactory::getCalculator($language);
 
-        $hyphenator = new Hyphenator();
-        $hyphenator->setOptions($o);
-        $hyphenator->addFilter(new SyllableFilter());
-
-        return new SyllableCounter($hyphenator);
+        return new AverageSyllablesPerWordCalculator($syllableCounter, $wordCounter);
     }
 }

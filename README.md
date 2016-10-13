@@ -24,4 +24,45 @@ TextStatistics is best installed using [composer](https://getcomposer.org)
 
 ## Usage
 
-TBD
+The different Calculators all implement a common ```CalculatorInterface```
+and therefore all provide a ```calculate```-Method that expects a ```Text```-Object 
+containing the Text to be calculated.
+ 
+Currently these Statistics are avalable:
+ 
+ * Average Sentence Length
+ * Average Syllables per word
+ * Character-Count (including Whitespace)
+ * Character-Count (excluding whitespace)
+ * Flesch-Reading-Ease for English texts
+ * Flesch-Reading-Ease for German texts
+ * Sentence-Count
+ * Syllable-Count
+ * Word-Count
+ 
+There are Factory-Methods for each statistic available, so getting one of the statistics 
+requires the following line of code:
+
+```php
+$text = new \Org_Heigl\TextStatistics\Text($theText);
+$wordCount =\Org_Heigl\TextStatistics\Service\WordCounterFactory::getCalculator()->calculate($text);
+$fleschReadingEase = /Org_Heigl\TextStatistics\Service\FleschReadingEaseCalculatorFactory::getCalculator()->calculate($text);
+```
+
+You can also add multiple Calculators to the TextStatisticsGenerator and retrieve multiple
+Statistics in one go like this:
+
+```php
+$text = new \Org_Heigl\TextStatistics\Text($theText);
+
+$statGenerator = new \Org_Heigl\TextStatistics\TextSTatisticsGenerator();
+$statGenerator->add('wordCount', \Org_Heigl\TextStatistics\Service\WordCounterFactory::getCalculator());
+$statGenerator->add('flesch', \Org_Heigl\TextStatistics\Service\FleschReadingEaseCalculatorFactory::getCalculator());
+
+print_R($statGenerator->calculate($text));
+
+// array(
+//    'wordCount' => xx,
+//    'flesch' => yy,
+// )
+```

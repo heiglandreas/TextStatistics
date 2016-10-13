@@ -24,28 +24,26 @@
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Service;
+namespace Org_Heigl\TextStatisticsTests\Calculator;
 
+use Org\Heigl\Hyphenator\Dictionary\Dictionary;
 use Org\Heigl\Hyphenator\Hyphenator;
 use Org\Heigl\Hyphenator\Options;
+use Org_Heigl\TextStatistics\Calculator\CharacterCounter;
+use Org_Heigl\TextStatistics\Calculator\CharacterWithoutWhitespaceCounter;
 use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
+use Org_Heigl\TextStatistics\Calculator\WordCounter;
+use Org_Heigl\TextStatistics\Text;
 use Org_Heigl\TextStatistics\Util\SyllableFilter;
 
-class SyllableCounterFactory
+class CharacterWithoutWhitespaceCounterTest extends \PHPUnit_Framework_TestCase
 {
-    public static function getCalculator($locale = 'de_DE')
+    public function testThatCountingcharactersWorksWithoutWhitespace()
     {
-        $o = new Options();
-        $o->setDefaultLocale($locale)
-          ->setRightMin(2)
-          ->setLeftMin(2)
-          ->setWordMin(4)
-          ->setTokenizers('Whitespace','Punctuation');
+        $text = new Text('Dieser text' . "\t" . 'enthält die ein oder andere Silbe des Donaudampfschifffahrtskapitäns');
 
-        $hyphenator = new Hyphenator();
-        $hyphenator->setOptions($o);
-        $hyphenator->addFilter(new SyllableFilter());
+        $calculator = new CharacterWithoutWhitespaceCounter();
 
-        return new SyllableCounter($hyphenator);
+        $this->assertEquals(71, $calculator->calculate($text));
     }
 }

@@ -24,9 +24,17 @@
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Filter;
+namespace Org_Heigl\TextStatistics\Service;
 
-interface FilterInterface
+use Org_Heigl\TextStatistics\Calculator\FleschReadingEaseCalculator;
+
+class FleschReadingEaseCalculatorGermanFactory
 {
-    public function filter($text);
+    public static function getCalculator()
+    {
+        return new FleschReadingEaseCalculatorGerman(
+            AverageSentenceLengthCalculatorFactory::getCalculator(),
+            AverageSyllablesPerWordCalculatorFactory::getCalculator('de_DE')
+        );
+    }
 }

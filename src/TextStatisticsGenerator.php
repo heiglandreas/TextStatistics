@@ -20,32 +20,32 @@
  * @author    Andreas Heigl<andreas@heigl.org>
  * @copyright Andreas Heigl
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @since     12.10.2016
+ * @since     13.10.2016
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Service;
+namespace Org_Heigl\TextStatistics;
 
-use Org\Heigl\Hyphenator\Hyphenator;
-use Org\Heigl\Hyphenator\Options;
-use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
-use Org_Heigl\TextStatistics\Util\SyllableFilter;
+use Org_Heigl\TextStatistics\Calculator\CalculatorInterface;
 
-class SyllableCounterFactory
+class TextStatisticsGenerator implements CalculatorInterface
 {
-    public static function getCalculator($locale = 'de_DE')
+    /** @var CalculatorInterface[] */
+    protected $calculators = [];
+
+    public function add($key, CalculatorInterface $calculator)
     {
-        $o = new Options();
-        $o->setDefaultLocale($locale)
-          ->setRightMin(2)
-          ->setLeftMin(2)
-          ->setWordMin(4)
-          ->setTokenizers('Whitespace','Punctuation');
+        $this->calculators[$key] = $calculator;
+    }
 
-        $hyphenator = new Hyphenator();
-        $hyphenator->setOptions($o);
-        $hyphenator->addFilter(new SyllableFilter());
+    public function calculate(Text $text)
+    {
+        $return = [];
 
-        return new SyllableCounter($hyphenator);
+        foreach ($this->calculators as $key => $calculator) {
+            $return[$key] = $calculator->calculate($text);
+        }
+
+        return $return;
     }
 }
