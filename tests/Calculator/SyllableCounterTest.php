@@ -26,7 +26,6 @@
 
 namespace Org_Heigl\TextStatisticsTests\Calculator;
 
-use Org\Heigl\Hyphenator\Dictionary\Dictionary;
 use Org\Heigl\Hyphenator\Hyphenator;
 use Org\Heigl\Hyphenator\Options;
 use Org_Heigl\TextStatistics\Calculator\SyllableCounter;

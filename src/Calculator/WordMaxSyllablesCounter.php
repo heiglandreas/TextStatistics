@@ -26,19 +26,28 @@
 
 namespace Org_Heigl\TextStatistics\Calculator;
 
+use Org\Heigl\Hyphenator\Tokenizer\PunctuationTokenizer;
+use Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry;
+use Org\Heigl\Hyphenator\Tokenizer\WhitespaceTokenizer;
+use Org\Heigl\Hyphenator\Tokenizer\WordToken;
 use Org_Heigl\TextStatistics\Text;
 
-/**
- * Class FleschReadingEaseCalculator
- *
- * This class provides ways to calculate the FleschReadingEase-Index.
- *
- * @see https://de.wikipedia.org/wiki/Lesbarkeitsindex
- * @package Org_Heigl\TextStatistics\Calculator
- */
-class FleschReadingEaseCalculatorGerman extends FleschReadingEaseCalculator
+class WordMaxSyllablesCounter implements CalculatorInterface
 {
-     /**
+    protected $tokenizer;
+
+    protected $syllableCounter;
+
+    public function __construct(Hyphenator $hyphenator)
+    {
+        $this->tokenizer = new TokenizerRegistry();
+        $this->tokenizer->add(new PunctuationTokenizer());
+        $this->tokenizer->add(new WhitespaceTokenizer());
+
+        $this->syllableCounter = new SyllableCounter($hyphenator);
+    }
+
+    /**
      * Do the actual calculation of a statistic
      *
      * @param Text $text
@@ -47,8 +56,21 @@ class FleschReadingEaseCalculatorGerman extends FleschReadingEaseCalculator
      */
     public function calculate(Text $text)
     {
-        return 180 -
-               $this->averageSentenceLengthCalculator->calculate($text) -
-               (58.5 * $this->averageSyllablesPerWordCalculator->calculate($text));
+        $tokens = $this->tokenizer->tokenize($text->getPlainText());
+
+        $maxSyllables = 0;
+
+        foreach ($tokens as $token) {
+            if (! $token instanceof WordToken) {
+                continue;
+            }
+
+            $syllables = $this->syllableCounter->calculate(new Text($token->getFilteredContent()));
+            if ($syllables > $maxSyllables) {
+                $maxSyllables = $syllables;
+            }
+        }
+
+        return $maxSyllables;
     }
 }

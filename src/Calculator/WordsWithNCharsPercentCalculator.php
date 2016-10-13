@@ -28,17 +28,18 @@ namespace Org_Heigl\TextStatistics\Calculator;
 
 use Org_Heigl\TextStatistics\Text;
 
-/**
- * Class FleschReadingEaseCalculator
- *
- * This class provides ways to calculate the FleschReadingEase-Index.
- *
- * @see https://de.wikipedia.org/wiki/Lesbarkeitsindex
- * @package Org_Heigl\TextStatistics\Calculator
- */
-class FleschReadingEaseCalculatorGerman extends FleschReadingEaseCalculator
+class WordsWithNCharsPercentCalculator implements CalculatorInterface
 {
-     /**
+    protected $wordsWithNCharsCounter;
+    protected $wordCounter;
+
+    public function __construct(WordsWithNCharsCounter $wordsWithNCharsCounter, WordCounter $wordCounter)
+    {
+        $this->wordsWithNCharsCounter = $wordsWithNCharsCounter;
+        $this->wordCounter = $wordCounter;
+    }
+
+    /**
      * Do the actual calculation of a statistic
      *
      * @param Text $text
@@ -47,8 +48,6 @@ class FleschReadingEaseCalculatorGerman extends FleschReadingEaseCalculator
      */
     public function calculate(Text $text)
     {
-        return 180 -
-               $this->averageSentenceLengthCalculator->calculate($text) -
-               (58.5 * $this->averageSyllablesPerWordCalculator->calculate($text));
+        return $this->wordsWithNCharsCounter->calculate($text) / $this->wordCounter->calculate($text) * 100;
     }
 }

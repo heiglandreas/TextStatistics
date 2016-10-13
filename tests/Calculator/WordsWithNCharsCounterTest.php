@@ -20,35 +20,25 @@
  * @author    Andreas Heigl<andreas@heigl.org>
  * @copyright Andreas Heigl
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @since     12.10.2016
+ * @since     13.10.2016
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Calculator;
+namespace Org_Heigl\TextStatisticsTests\Calculator;
 
+use Org_Heigl\TextStatistics\Calculator\WordsWithNCharsCounter;
 use Org_Heigl\TextStatistics\Text;
 
-/**
- * Class FleschReadingEaseCalculator
- *
- * This class provides ways to calculate the FleschReadingEase-Index.
- *
- * @see https://de.wikipedia.org/wiki/Lesbarkeitsindex
- * @package Org_Heigl\TextStatistics\Calculator
- */
-class FleschReadingEaseCalculatorGerman extends FleschReadingEaseCalculator
+class WordsWithNCharsCounterTest extends \PHPUnit_Framework_TestCase
 {
-     /**
-     * Do the actual calculation of a statistic
-     *
-     * @param Text $text
-     *
-     * @return mixed
-     */
-    public function calculate(Text $text)
+    public function testThatCountingWordsWithNCharactersWorksAsExpected()
     {
-        return 180 -
-               $this->averageSentenceLengthCalculator->calculate($text) -
-               (58.5 * $this->averageSyllablesPerWordCalculator->calculate($text));
+        $text = new Text('Dieser text enthält die ein oder andere Silbe des Donaudampfschifffahrtskapitäns');
+
+        $calculator = new WordsWithNCharsCounter(6);
+
+        $this->assertEquals(4, $calculator->calculate($text));
+        $this->assertEquals(4, $calculator->calculate($text));
     }
+
 }

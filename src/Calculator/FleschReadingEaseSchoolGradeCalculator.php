@@ -28,27 +28,54 @@ namespace Org_Heigl\TextStatistics\Calculator;
 
 use Org_Heigl\TextStatistics\Text;
 
-/**
- * Class FleschReadingEaseCalculator
- *
- * This class provides ways to calculate the FleschReadingEase-Index.
- *
- * @see https://de.wikipedia.org/wiki/Lesbarkeitsindex
- * @package Org_Heigl\TextStatistics\Calculator
- */
-class FleschReadingEaseCalculatorGerman extends FleschReadingEaseCalculator
+class FleschReadingEaseSchoolGradeCalculator implements CalculatorInterface
 {
-     /**
+    protected $fleschReadingEaseCalculator;
+
+    public function __construct(
+        FleschReadingEaseCalculator $fleschReadingEaseCalculator
+    ) {
+        $this->fleschReadingEaseCalculator = $fleschReadingEaseCalculator;
+    }
+
+    /**
      * Do the actual calculation of a statistic
+     *
+     * This returns the Grade a reader should have to be able to understand the text
      *
      * @param Text $text
      *
-     * @return mixed
+     * @see http://www.mang.canterbury.ac.nz/writing_guide/writing/flesch.shtml
+     * @return int
      */
     public function calculate(Text $text)
     {
-        return 180 -
-               $this->averageSentenceLengthCalculator->calculate($text) -
-               (58.5 * $this->averageSyllablesPerWordCalculator->calculate($text));
+        $fre = $this->fleschReadingEaseCalculator->calculate($text);
+
+        if ($fre > 90) {
+            return 5;
+        }
+
+        if ($fre > 80) {
+            return 6;
+        }
+
+        if ($fre > 70) {
+            return 7;
+        }
+
+        if ($fre > 60) {
+            return 9;
+        }
+
+        if ($fre > 50) {
+            return 12;
+        }
+
+        if ($fre > 30) {
+            return 'college';
+        }
+
+        return 'college graduate';
     }
 }

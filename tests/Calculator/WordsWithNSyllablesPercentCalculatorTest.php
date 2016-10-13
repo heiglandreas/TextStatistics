@@ -20,35 +20,32 @@
  * @author    Andreas Heigl<andreas@heigl.org>
  * @copyright Andreas Heigl
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @since     12.10.2016
+ * @since     13.10.2016
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Calculator;
+namespace Org_Heigl\TextStatisticsTests\Calculator;
 
+use Org_Heigl\TextStatistics\Calculator\WordCounter;
+use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesCounter;
+use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesPercentCalculator;
 use Org_Heigl\TextStatistics\Text;
+use Mockery as M;
 
-/**
- * Class FleschReadingEaseCalculator
- *
- * This class provides ways to calculate the FleschReadingEase-Index.
- *
- * @see https://de.wikipedia.org/wiki/Lesbarkeitsindex
- * @package Org_Heigl\TextStatistics\Calculator
- */
-class FleschReadingEaseCalculatorGerman extends FleschReadingEaseCalculator
+/** @runTestsInSeparateProcesses */
+class WordsWithNSyllablesPercentCalculatorTest extends \PHPUnit_Framework_TestCase
 {
-     /**
-     * Do the actual calculation of a statistic
-     *
-     * @param Text $text
-     *
-     * @return mixed
-     */
-    public function calculate(Text $text)
+    public function testThatSyllablePercentageCounterWorks()
     {
-        return 180 -
-               $this->averageSentenceLengthCalculator->calculate($text) -
-               (58.5 * $this->averageSyllablesPerWordCalculator->calculate($text));
+        $text = new Text('Dieser tExt enthält die ein oder andere Silbe des Donaudampfschifffahrtskapitäns');
+
+        $wordsWithNSyllables = M::mock('alias:' . WordsWithNSyllablesCounter::class);
+        $wordsWithNSyllables->shouldReceive('calculate')->andReturn(3);
+
+        $wordCounter = M::mock('alias:' . WordCounter::class);
+        $wordCounter->shouldReceive('calculate')->andReturn(30);
+
+        $calculator = new WordsWithNSyllablesPercentCalculator($wordsWithNSyllables, $wordCounter);
+        $this->assertEquals(10, $calculator->calculate($text));
     }
 }

@@ -24,31 +24,28 @@
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Calculator;
+namespace Org_Heigl\TextStatistics\Service;
 
-use Org_Heigl\TextStatistics\Text;
+use Org\Heigl\Hyphenator\Hyphenator;
+use Org\Heigl\Hyphenator\Options;
+use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesCounter;
+use Org_Heigl\TextStatistics\Util\WordsWithNSyllablesFilter;
 
-/**
- * Class FleschReadingEaseCalculator
- *
- * This class provides ways to calculate the FleschReadingEase-Index.
- *
- * @see https://de.wikipedia.org/wiki/Lesbarkeitsindex
- * @package Org_Heigl\TextStatistics\Calculator
- */
-class FleschReadingEaseCalculatorGerman extends FleschReadingEaseCalculator
+class WordsWithNSyllablesCounterFactory
 {
-     /**
-     * Do the actual calculation of a statistic
-     *
-     * @param Text $text
-     *
-     * @return mixed
-     */
-    public function calculate(Text $text)
+    public static function getCalculator($locale = 'de_DE', $syllables = 1)
     {
-        return 180 -
-               $this->averageSentenceLengthCalculator->calculate($text) -
-               (58.5 * $this->averageSyllablesPerWordCalculator->calculate($text));
+        $o = new Options();
+        $o->setDefaultLocale($locale)
+          ->setRightMin(2)
+          ->setLeftMin(2)
+          ->setWordMin(4)
+          ->setTokenizers('Whitespace', 'Punctuation');
+
+        $hyphenator = new Hyphenator();
+        $hyphenator->setOptions($o);
+        $hyphenator->addFilter(new WordsWithNSyllablesOnlyFilter($syllables));
+
+        return new WordsWithNSyllablesOnlyCounter($hyphenator);
     }
 }

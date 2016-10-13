@@ -34,6 +34,7 @@ use Org_Heigl\TextStatistics\Calculator\WordCounter;
 use Org_Heigl\TextStatistics\Text;
 use Org_Heigl\TextStatistics\Util\SyllableFilter;
 
+/** @runTestsInSeparateProcesses */
 class WordCounterTest extends \PHPUnit_Framework_TestCase
 {
     public function testThatCountingWordsWorks()

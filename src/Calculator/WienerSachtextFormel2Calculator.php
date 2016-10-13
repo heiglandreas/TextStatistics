@@ -36,19 +36,37 @@ use Org_Heigl\TextStatistics\Text;
  * @see https://de.wikipedia.org/wiki/Lesbarkeitsindex
  * @package Org_Heigl\TextStatistics\Calculator
  */
-class FleschReadingEaseCalculatorGerman extends FleschReadingEaseCalculator
+class WienerSachtextFormel2Calculator implements CalculatorInterface
 {
-     /**
+    protected $percentWordsWithMoreThanThreeSyllables;
+
+    protected $averageSentenceLenght;
+
+    protected $percentWordsWithMoreThanSixChars;
+
+    public function __construct(
+        WordsWithNSyllablesPercentCalculator $percentWordsWithMoreThanThreeSyllables,
+        AverageSentenceLengthCalculator $averageSentenceLenght,
+        WordsWithNCharsPercentCalculator $percentWordsWithMoreThanSixChars
+    ) {
+        $this->percentWordsWithMoreThanThreeSyllables = $percentWordsWithMoreThanThreeSyllables;
+        $this->averageSentenceLenght = $averageSentenceLenght;
+        $this->percentWordsWithMoreThanSixChars = $percentWordsWithMoreThanSixChars;
+    }
+
+    /**
      * Do the actual calculation of a statistic
      *
      * @param Text $text
      *
+     * @see https://de.wikipedia.org/wiki/Lesbarkeitsindex
      * @return mixed
      */
     public function calculate(Text $text)
     {
-        return 180 -
-               $this->averageSentenceLengthCalculator->calculate($text) -
-               (58.5 * $this->averageSyllablesPerWordCalculator->calculate($text));
+        return 0.2007 * $this->percentWordsWithMoreThanThreeSyllables->calculate($text)
+             + 0.1682 * $this->averageSentenceLenght->calculate($text)
+             + 0.1373 * $this->percentWordsWithMoreThanSixChars->calculate($text)
+             - 2.779;
     }
 }

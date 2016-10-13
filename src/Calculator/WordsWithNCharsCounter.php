@@ -26,19 +26,27 @@
 
 namespace Org_Heigl\TextStatistics\Calculator;
 
+use Org\Heigl\Hyphenator\Tokenizer\PunctuationTokenizer;
+use Org\Heigl\Hyphenator\Tokenizer\TokenizerRegistry;
+use Org\Heigl\Hyphenator\Tokenizer\WhitespaceTokenizer;
+use Org\Heigl\Hyphenator\Tokenizer\WordToken;
 use Org_Heigl\TextStatistics\Text;
 
-/**
- * Class FleschReadingEaseCalculator
- *
- * This class provides ways to calculate the FleschReadingEase-Index.
- *
- * @see https://de.wikipedia.org/wiki/Lesbarkeitsindex
- * @package Org_Heigl\TextStatistics\Calculator
- */
-class FleschReadingEaseCalculatorGerman extends FleschReadingEaseCalculator
+class WordsWithNCharsCounter implements CalculatorInterface
 {
-     /**
+    protected $tokenizer;
+
+    protected $minChars;
+
+    public function __construct($minChars)
+    {
+        $this->minChars = $minChars;
+        $this->tokenizer = new TokenizerRegistry();
+        $this->tokenizer->add(new PunctuationTokenizer());
+        $this->tokenizer->add(new WhitespaceTokenizer());
+    }
+
+    /**
      * Do the actual calculation of a statistic
      *
      * @param Text $text
@@ -47,8 +55,16 @@ class FleschReadingEaseCalculatorGerman extends FleschReadingEaseCalculator
      */
     public function calculate(Text $text)
     {
-        return 180 -
-               $this->averageSentenceLengthCalculator->calculate($text) -
-               (58.5 * $this->averageSyllablesPerWordCalculator->calculate($text));
+        $tokens = $this->tokenizer->tokenize($text->getPlainText());
+        foreach ($tokens as $token) {
+            if (! $token instanceof WordToken) {
+                $tokens->replace($token, []);
+            }
+            if (mb_strlen($token->getFilteredContent()) < $this->minChars) {
+                $tokens->replace($token, []);
+            }
+        }
+
+        return $tokens->count();
     }
 }

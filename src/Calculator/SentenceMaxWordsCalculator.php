@@ -20,7 +20,7 @@
  * @author    Andreas Heigl<andreas@heigl.org>
  * @copyright Andreas Heigl
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @since     12.10.2016
+ * @since     13.10.2016
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
@@ -28,17 +28,16 @@ namespace Org_Heigl\TextStatistics\Calculator;
 
 use Org_Heigl\TextStatistics\Text;
 
-/**
- * Class FleschReadingEaseCalculator
- *
- * This class provides ways to calculate the FleschReadingEase-Index.
- *
- * @see https://de.wikipedia.org/wiki/Lesbarkeitsindex
- * @package Org_Heigl\TextStatistics\Calculator
- */
-class FleschReadingEaseCalculatorGerman extends FleschReadingEaseCalculator
+class SentenceMaxWordsCalculator implements CalculatorInterface
 {
-     /**
+    protected $wordCounter;
+
+    public function __construct()
+    {
+        $this->wordCounter = new WordCounter();
+    }
+
+    /**
      * Do the actual calculation of a statistic
      *
      * @param Text $text
@@ -47,8 +46,17 @@ class FleschReadingEaseCalculatorGerman extends FleschReadingEaseCalculator
      */
     public function calculate(Text $text)
     {
-        return 180 -
-               $this->averageSentenceLengthCalculator->calculate($text) -
-               (58.5 * $this->averageSyllablesPerWordCalculator->calculate($text));
+        $result = preg_split('/\.\!\?/', $text->getPlainText());
+
+        $maxWords = 0;
+
+        foreach ($result as $sentence) {
+            $words = $this->wordCounter->calculate(new Text($sentence));
+            if ($words > $maxWords) {
+                $maxWords = $words;
+            }
+        }
+
+        return $maxWords;
     }
 }
