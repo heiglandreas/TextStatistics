@@ -28,12 +28,13 @@ namespace Org_Heigl\TextStatistics\Service;
 
 use Org\Heigl\Hyphenator\Hyphenator;
 use Org\Heigl\Hyphenator\Options;
-use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesCounter;
-use Org_Heigl\TextStatistics\Util\WordsWithNSyllablesFilter;
+use Org_Heigl\TextStatistics\Calculator\SentenceMaxSyllablesCalculator;
+use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
+use Org_Heigl\TextStatistics\Util\SyllableFilter;
 
-class WordsWithNSyllablesOnlyCounterFactory
+class SentenceMaxSyllablesCalculatorFactory
 {
-    public static function getCalculator($locale = 'de_DE', $syllables = 1)
+    public static function getCalculator($locale = 'de_DE')
     {
         $o = new Options();
         $o->setDefaultLocale($locale)
@@ -44,8 +45,8 @@ class WordsWithNSyllablesOnlyCounterFactory
 
         $hyphenator = new Hyphenator();
         $hyphenator->setOptions($o);
-        $hyphenator->addFilter(new WordsWithNSyllablesOnlyFilter($syllables));
+        $hyphenator->addFilter(new SyllableFilter());
 
-        return new WordsWithNSyllablesOnlyCounter($hyphenator);
+        return new SentenceMaxSyllablesCalculator($hyphenator);
     }
 }

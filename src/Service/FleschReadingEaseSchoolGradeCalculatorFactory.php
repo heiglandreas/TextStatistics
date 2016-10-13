@@ -26,26 +26,12 @@
 
 namespace Org_Heigl\TextStatistics\Service;
 
-use Org\Heigl\Hyphenator\Hyphenator;
-use Org\Heigl\Hyphenator\Options;
-use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesCounter;
-use Org_Heigl\TextStatistics\Util\WordsWithNSyllablesFilter;
+use Org_Heigl\TextStatistics\Calculator\FleschReadingEaseCalculator;
 
-class WordsWithNSyllablesOnlyCounterFactory
+class FleschReadingEaseSchoolGradeCalculatorFactory
 {
-    public static function getCalculator($locale = 'de_DE', $syllables = 1)
+    public static function getCalculator(FleschReadingEaseCalculator $calculator)
     {
-        $o = new Options();
-        $o->setDefaultLocale($locale)
-          ->setRightMin(2)
-          ->setLeftMin(2)
-          ->setWordMin(4)
-          ->setTokenizers('Whitespace', 'Punctuation');
-
-        $hyphenator = new Hyphenator();
-        $hyphenator->setOptions($o);
-        $hyphenator->addFilter(new WordsWithNSyllablesOnlyFilter($syllables));
-
-        return new WordsWithNSyllablesOnlyCounter($hyphenator);
+        return new FleschReadingEaseSchoolGradeCalculatorGerman($calculator);
     }
 }
