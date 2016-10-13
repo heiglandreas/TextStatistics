@@ -27,6 +27,10 @@ That's why f.e. the syllable-calculation differs.
 
 TextStatistics is best installed using [composer](https://getcomposer.org)
 
+```bash
+$ composer require org_heigl/textstatistics
+```
+
 ## Usage
 
 The different Calculators all implement a common ```CalculatorInterface```
