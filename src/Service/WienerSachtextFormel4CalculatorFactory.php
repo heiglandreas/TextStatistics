@@ -43,7 +43,7 @@ class WienerSachtextFormel4CalculatorFactory
 {
     public static function getCalculator()
     {
-        return new WienerSachtextFormel1Calculator(
+        return new WienerSachtextFormel4Calculator(
             new WordsWithNSyllablesPercentCalculator(WordsWithNSyllablesCounterFactory::getCalculator('de_DE', 3), new WordCounter()),
             new AverageSentenceLengthCalculator(new WordCounter(), new SentenceCounter())
         );
