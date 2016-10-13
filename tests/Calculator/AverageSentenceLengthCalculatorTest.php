@@ -35,7 +35,7 @@ use Org_Heigl\TextStatistics\Calculator\WordCounter;
 use Org_Heigl\TextStatistics\Text;
 
 /** @runTestsInSeparateProcesses */
-class AverageSentenceLengthTest extends \PHPUnit_Framework_TestCase
+class AverageSentenceLengthCalculatorTest extends \PHPUnit_Framework_TestCase
 {
     public function testThatReadingEaseIsCalculatedProperly()
     {
