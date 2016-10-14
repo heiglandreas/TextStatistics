@@ -28,6 +28,7 @@ namespace Org_Heigl\TextStatistics\Service;
 
 use Org\Heigl\Hyphenator\Hyphenator;
 use Org\Heigl\Hyphenator\Options;
+use Org_Heigl\TextStatistics\Calculator\CachingWordsWithNSyllablesCounter;
 use Org_Heigl\TextStatistics\Calculator\CachingWordsWithNSyllablesOnlyCounter;
 use Org_Heigl\TextStatistics\Util\WordsWithNSyllablesFilter;
 
@@ -46,6 +47,6 @@ class WordsWithNSyllablesCounterFactory
         $hyphenator->setOptions($o);
         $hyphenator->addFilter(new WordsWithNSyllablesFilter($minSyllables));
 
-        return new CachingWordsWithNSyllablesOnlyCounter($hyphenator);
+        return new CachingWordsWithNSyllablesCounter($hyphenator);
     }
 }

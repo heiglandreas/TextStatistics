@@ -39,9 +39,9 @@ class WienerSachtextFormel2CalculatorFactory
     public static function getCalculator()
     {
         return new WienerSachtextFormel2Calculator(
-            new WordsWithNSyllablesPercentCalculator(WordsWithNSyllablesCounterFactory::getCalculator('de_DE', 3), new WordCounter()),
-            new AverageSentenceLengthCalculator(new WordCounter(), new SentenceCounter()),
-            new WordsWithNCharsPercentCalculator(new WordsWithNCharsCounter(6), new WordCounter())
+            new WordsWithNSyllablesPercentCalculator(WordsWithNSyllablesCounterFactory::getCalculator('de_DE', 3), WordCounterFactory::getCalculator()),
+            new AverageSentenceLengthCalculator(WordCounterFactory::getCalculator(), new SentenceCounter()),
+            new WordsWithNCharsPercentCalculator(new WordsWithNCharsCounter(6), WordCounterFactory::getCalculator())
         );
     }
 }

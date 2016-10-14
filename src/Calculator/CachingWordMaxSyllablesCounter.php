@@ -34,8 +34,8 @@ class CachingWordMaxSyllablesCounter extends WordMaxSyllablesCounter
 
     public function calculate(Text $text)
     {
-        $text = $text->getPlainText();
-        $hash = sha1($text);
+        $plain = $text->getPlainText();
+        $hash  = sha1($plain);
 
         if (! isset( static::$cache[$hash])) {
             $result = parent::calculate($text);
