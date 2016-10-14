@@ -26,7 +26,7 @@
 
 namespace Org_Heigl\TextStatistics\Service;
 
-use Org_Heigl\TextStatistics\Calculator\FleschReadingEaseCalculator;
+use Org_Heigl\TextStatistics\Calculator\FleschReadingEaseCalculatorGerman;
 
 class FleschReadingEaseCalculatorGermanFactory
 {

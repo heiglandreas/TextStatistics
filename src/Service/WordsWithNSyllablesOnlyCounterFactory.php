@@ -28,8 +28,8 @@ namespace Org_Heigl\TextStatistics\Service;
 
 use Org\Heigl\Hyphenator\Hyphenator;
 use Org\Heigl\Hyphenator\Options;
-use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesCounter;
-use Org_Heigl\TextStatistics\Util\WordsWithNSyllablesFilter;
+use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesOnlyCounter;
+use Org_Heigl\TextStatistics\Util\WordsWithNSyllablesOnlyFilter;
 
 class WordsWithNSyllablesOnlyCounterFactory
 {

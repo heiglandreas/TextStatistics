@@ -32,6 +32,6 @@ class FleschReadingEaseSchoolGradeCalculatorFactory
 {
     public static function getCalculator(FleschReadingEaseCalculator $calculator)
     {
-        return new FleschReadingEaseSchoolGradeCalculatorGerman($calculator);
+        return new FleschReadingEaseSchoolGradeCalculator($calculator);
     }
 }

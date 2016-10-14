@@ -26,18 +26,14 @@
 
 namespace Org_Heigl\TextStatistics\Service;
 
-use Org\Heigl\Hyphenator\Hyphenator;
-use Org\Heigl\Hyphenator\Options;
 use Org_Heigl\TextStatistics\Calculator\AverageSentenceLengthCalculator;
 use Org_Heigl\TextStatistics\Calculator\SentenceCounter;
-use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
 use Org_Heigl\TextStatistics\Calculator\WienerSachtextFormel1Calculator;
 use Org_Heigl\TextStatistics\Calculator\WordCounter;
 use Org_Heigl\TextStatistics\Calculator\WordsWithNCharsCounter;
 use Org_Heigl\TextStatistics\Calculator\WordsWithNCharsPercentCalculator;
-use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesCounter;
 use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesPercentCalculator;
-use Org_Heigl\TextStatistics\Util\SyllableFilter;
+use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesOnlyPercentCalculator;
 
 class WienerSachtextFormel1CalculatorFactory
 {

@@ -26,27 +26,12 @@
 
 namespace Org_Heigl\TextStatistics\Service;
 
-use Org\Heigl\Hyphenator\Hyphenator;
-use Org\Heigl\Hyphenator\Options;
 use Org_Heigl\TextStatistics\Calculator\SentenceMaxSyllablesCalculator;
-use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
-use Org_Heigl\TextStatistics\Util\SyllableFilter;
 
 class SentenceMaxSyllablesCalculatorFactory
 {
     public static function getCalculator($locale = 'de_DE')
     {
-        $o = new Options();
-        $o->setDefaultLocale($locale)
-          ->setRightMin(2)
-          ->setLeftMin(2)
-          ->setWordMin(4)
-          ->setTokenizers('Whitespace', 'Punctuation');
-
-        $hyphenator = new Hyphenator();
-        $hyphenator->setOptions($o);
-        $hyphenator->addFilter(new SyllableFilter());
-
-        return new SentenceMaxSyllablesCalculator($hyphenator);
+        return new SentenceMaxSyllablesCalculator(new SyllableCounterFactory::getCalculator($locale));
     }
 }
