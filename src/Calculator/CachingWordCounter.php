@@ -20,32 +20,29 @@
  * @author    Andreas Heigl<andreas@heigl.org>
  * @copyright Andreas Heigl
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @since     12.10.2016
+ * @since     14.10.2016
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Service;
+namespace Org_Heigl\TextStatistics\Calculator;
 
-use Org\Heigl\Hyphenator\Hyphenator;
-use Org\Heigl\Hyphenator\Options;
-use Org_Heigl\TextStatistics\Calculator\CachingWordsWithNSyllablesOnlyCounter;
-use Org_Heigl\TextStatistics\Util\WordsWithNSyllablesOnlyFilter;
+use Org_Heigl\TextStatistics\Text;
 
-class WordsWithNSyllablesOnlyCounterFactory
+class CachingWordCounter extends WordCounter
 {
-    public static function getCalculator($locale = 'de_DE', $syllables = 1)
+    protected static $cache = [];
+
+    public function calculate(Text $text)
     {
-        $o = new Options();
-        $o->setDefaultLocale($locale)
-          ->setRightMin(2)
-          ->setLeftMin(2)
-          ->setWordMin(4)
-          ->setTokenizers('Whitespace', 'Punctuation');
+        $text = $text->getPlainText();
+        $hash = sha1($text);
 
-        $hyphenator = new Hyphenator();
-        $hyphenator->setOptions($o);
-        $hyphenator->addFilter(new WordsWithNSyllablesOnlyFilter($syllables));
+        if (! isset( static::$cache[$hash])) {
+            $result = parent::calculate($text);
+            static::$cache[$hash] = $result;
+        }
 
-        return new CachingWordsWithNSyllablesOnlyCounter($hyphenator);
+        return static::$cache[$hash];
     }
+
 }

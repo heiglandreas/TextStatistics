@@ -28,7 +28,7 @@ namespace Org_Heigl\TextStatistics\Service;
 
 use Org\Heigl\Hyphenator\Hyphenator;
 use Org\Heigl\Hyphenator\Options;
-use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
+use Org_Heigl\TextStatistics\Calculator\CachingSyllableCounter;
 use Org_Heigl\TextStatistics\Util\SyllableFilter;
 
 class SyllableCounterFactory
@@ -46,6 +46,6 @@ class SyllableCounterFactory
         $hyphenator->setOptions($o);
         $hyphenator->addFilter(new SyllableFilter());
 
-        return new SyllableCounter($hyphenator);
+        return new CachingSyllableCounter($hyphenator);
     }
 }

@@ -32,6 +32,6 @@ class WordCounterFactory
 {
     public static function getCalculator()
     {
-        return new WordCounter();
+        return new CachingWordCounter();
     }
 }

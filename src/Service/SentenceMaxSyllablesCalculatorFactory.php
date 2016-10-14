@@ -32,6 +32,6 @@ class SentenceMaxSyllablesCalculatorFactory
 {
     public static function getCalculator($locale = 'de_DE')
     {
-        return new SentenceMaxSyllablesCalculator(new SyllableCounterFactory::getCalculator($locale));
+        return new SentenceMaxSyllablesCalculator(SyllableCounterFactory::getCalculator($locale));
     }
 }

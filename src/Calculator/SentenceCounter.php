@@ -39,7 +39,7 @@ class SentenceCounter implements CalculatorInterface
      */
     public function calculate(Text $text)
     {
-        $result = preg_split('/\.\!\?/', $text->getPlainText());
+        $result = preg_split('/[\.\!\?]\s/mu', $text->getPlainText());
         return count($result);
     }
 }
