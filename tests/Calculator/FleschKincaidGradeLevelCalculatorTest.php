@@ -20,43 +20,35 @@
  * @author    Andreas Heigl<andreas@heigl.org>
  * @copyright Andreas Heigl
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @since     13.10.2016
+ * @since     14.10.2016
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Calculator;
+namespace Org_Heigl\TextStatisticsTests\Calculator;
 
+use Org_Heigl\TextStatistics\Calculator\AverageSentenceLengthCalculator;
+use Org_Heigl\TextStatistics\Calculator\AverageSyllablesPerWordCalculator;
+use Org_Heigl\TextStatistics\Calculator\FleschKincaidGradeLevelCalculator;
+use Mockery as M;
 use Org_Heigl\TextStatistics\Text;
 
-class SentenceMaxSyllablesCalculator implements CalculatorInterface
+/** @runTestsInSeparateProcesses */
+class FleschKincaidGradeLevelCalculatorTest extends \PHPUnit_Framework_TestCase
 {
-    protected $syllableCounter;
-
-    public function __construct(SyllableCounter $counter)
+    public function testThatTheFleschKincaidGradeLevelIsReturnedCorreectly()
     {
-        $this->syllableCounter = $counter;
-    }
+        $averageSentenceLengthCalculator = M::mock(AverageSentenceLengthCalculator::class);
+        $averageSentenceLengthCalculator->shouldReceive('calculate')->andReturn(5);
 
-    /**
-     * Do the actual calculation of a statistic
-     *
-     * @param Text $text
-     *
-     * @return mixed
-     */
-    public function calculate(Text $text)
-    {
-        $result = preg_split('/[\.\!\?]\s/mu', $text->getPlainText());
+        $averageSyllablesPerWord = M::mock(AverageSyllablesPerWordCalculator::class);
+        $averageSyllablesPerWord->shouldReceive('calculate')->andReturn(1.8);
 
-        $maxSyllables = 0;
+        $fcgl = new FleschKincaidGradeLevelCalculator($averageSentenceLengthCalculator, $averageSyllablesPerWord);
 
-        foreach ($result as $sentence) {
-            $syllables = $this->syllableCounter->calculate(new Text($sentence));
-            if ($syllables > $maxSyllables) {
-                $maxSyllables = $syllables;
-            }
-        }
+        $result = $fcgl->calculate(new Text('Foo'));
 
-        return $maxSyllables;
+        $averageSentenceLengthCalculator->shouldHaveReceived('calculate')->once();
+        $averageSyllablesPerWord->shouldHaveReceived('calculate')->once();
+        $this->assertEquals(7.6, round($result, 1));
     }
 }

@@ -38,13 +38,13 @@ class WordMaxSyllablesCounter implements CalculatorInterface
 
     protected $syllableCounter;
 
-    public function __construct(Hyphenator $hyphenator)
+    public function __construct(SyllableCounter $counter)
     {
         $this->tokenizer = new TokenizerRegistry();
         $this->tokenizer->add(new PunctuationTokenizer());
         $this->tokenizer->add(new WhitespaceTokenizer());
 
-        $this->syllableCounter = new SyllableCounter($hyphenator);
+        $this->syllableCounter = $counter;
     }
 
     /**

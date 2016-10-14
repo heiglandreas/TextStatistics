@@ -32,6 +32,7 @@ use Org_Heigl\TextStatistics\Calculator\AverageSyllablesPerWordCalculator;
 use Org_Heigl\TextStatistics\Calculator\FleschReadingEaseCalculatorGerman;
 use Org_Heigl\TextStatistics\Text;
 
+/** @runTestsInSeparateProcesses */
 class FleschReadingEaseCalculatorGermanTest extends \PHPUnit_Framework_TestCase
 {
     public function testThatReadingEaseIsCalculatedProperly()

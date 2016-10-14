@@ -20,43 +20,37 @@
  * @author    Andreas Heigl<andreas@heigl.org>
  * @copyright Andreas Heigl
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @since     13.10.2016
+ * @since     14.10.2016
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Calculator;
+namespace Org_Heigl\TextStatisticsTests\Calculator;
 
+use Mockery as M;
+use Org_Heigl\TextStatistics\Calculator\AverageSentenceLengthCalculator;
+use Org_Heigl\TextStatistics\Calculator\WienerSachtextFormel3Calculator;
+use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesPercentCalculator;
 use Org_Heigl\TextStatistics\Text;
 
-class SentenceMaxSyllablesCalculator implements CalculatorInterface
+/** @runTestsInSeparateProcesses */
+class WienerSachtextFormel3CalculatorTest extends \PHPUnit_Framework_TestCase
 {
-    protected $syllableCounter;
-
-    public function __construct(SyllableCounter $counter)
+    public function testThatCalculationWorksAsExpected()
     {
-        $this->syllableCounter = $counter;
-    }
+        $percentWordsWithMoreThanThreeSyllables = M::mock('alias:' . WordsWithNSyllablesPercentCalculator::class);
+        $percentWordsWithMoreThanThreeSyllables->shouldReceive('calculate')->andReturn(10);
 
-    /**
-     * Do the actual calculation of a statistic
-     *
-     * @param Text $text
-     *
-     * @return mixed
-     */
-    public function calculate(Text $text)
-    {
-        $result = preg_split('/[\.\!\?]\s/mu', $text->getPlainText());
+        $averageSentenceLenght = M::mock('alias:' . AverageSentenceLengthCalculator::class);
+        $averageSentenceLenght->shouldReceive('calculate')->andReturn(4.5);
 
-        $maxSyllables = 0;
+        $text = new Text('Foo');
 
-        foreach ($result as $sentence) {
-            $syllables = $this->syllableCounter->calculate(new Text($sentence));
-            if ($syllables > $maxSyllables) {
-                $maxSyllables = $syllables;
-            }
-        }
+        $calculator = new WienerSachtextFormel3Calculator(
+            $percentWordsWithMoreThanThreeSyllables,
+            $averageSentenceLenght
+        );
 
-        return $maxSyllables;
+        $result = $calculator->calculate($text);
+        $this->assertEquals(2.71, round($result, 2));
     }
 }

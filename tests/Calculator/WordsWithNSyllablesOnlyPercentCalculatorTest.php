@@ -24,39 +24,28 @@
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Calculator;
+namespace Org_Heigl\TextStatisticsTests\Calculator;
 
+use Org_Heigl\TextStatistics\Calculator\WordCounter;
+use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesOnlyCounter;
+use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesOnlyPercentCalculator;
 use Org_Heigl\TextStatistics\Text;
+use Mockery as M;
 
-class SentenceMaxSyllablesCalculator implements CalculatorInterface
+/** @runTestsInSeparateProcesses */
+class WordsWithNSyllablesOnlyPercentCalculatorTest extends \PHPUnit_Framework_TestCase
 {
-    protected $syllableCounter;
-
-    public function __construct(SyllableCounter $counter)
+    public function testThatCountingWordsWithNCharactersWorksAsExpected()
     {
-        $this->syllableCounter = $counter;
+        $wordsWithNCharsCounter = M::mock(WordsWithNSyllablesOnlyCounter::class);
+        $wordsWithNCharsCounter->shouldReceive('calculate')->andReturn(22);
+
+        $wordsCounter = M::mock(WordCounter::class);
+        $wordsCounter->shouldReceive('calculate')->andReturn(100);
+
+        $calculator = new WordsWithNSyllablesOnlyPercentCalculator($wordsWithNCharsCounter, $wordsCounter);
+
+        $this->assertEquals(22, $calculator->calculate(new Text('foo')));
     }
 
-    /**
-     * Do the actual calculation of a statistic
-     *
-     * @param Text $text
-     *
-     * @return mixed
-     */
-    public function calculate(Text $text)
-    {
-        $result = preg_split('/[\.\!\?]\s/mu', $text->getPlainText());
-
-        $maxSyllables = 0;
-
-        foreach ($result as $sentence) {
-            $syllables = $this->syllableCounter->calculate(new Text($sentence));
-            if ($syllables > $maxSyllables) {
-                $maxSyllables = $syllables;
-            }
-        }
-
-        return $maxSyllables;
-    }
 }

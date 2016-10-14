@@ -24,39 +24,27 @@
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Calculator;
+namespace Org_Heigl\TextStatisticsTests\Calculator;
 
+use Org_Heigl\TextStatistics\Calculator\SentenceMaxSyllablesCalculator;
+use Org_Heigl\TextStatistics\Calculator\SentenceMaxWordsCalculator;
+use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
+use Org_Heigl\TextStatistics\Calculator\WordCounter;
+use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesCounter;
+use Mockery as M;
 use Org_Heigl\TextStatistics\Text;
 
-class SentenceMaxSyllablesCalculator implements CalculatorInterface
+/** @runTestsInSeparateProcesses */
+class SentenceMaxWordsCalculatorTest extends \PHPUnit_Framework_TestCase
 {
-    protected $syllableCounter;
-
-    public function __construct(SyllableCounter $counter)
+    public function testThatMaxWordCalculatorWorks()
     {
-        $this->syllableCounter = $counter;
-    }
+        $wordCounter = M::mock(WordCounter::class);
+        $wordCounter->shouldReceive('calculate')->andReturnValues([4,6,5,2,7,1,4]);
 
-    /**
-     * Do the actual calculation of a statistic
-     *
-     * @param Text $text
-     *
-     * @return mixed
-     */
-    public function calculate(Text $text)
-    {
-        $result = preg_split('/[\.\!\?]\s/mu', $text->getPlainText());
+        $calculator = new SentenceMaxWordsCalculator($wordCounter);
+        $result = $calculator->calculate(new Text('Foo! bar! test. Trallala? bl. sd! df?'));
 
-        $maxSyllables = 0;
-
-        foreach ($result as $sentence) {
-            $syllables = $this->syllableCounter->calculate(new Text($sentence));
-            if ($syllables > $maxSyllables) {
-                $maxSyllables = $syllables;
-            }
-        }
-
-        return $maxSyllables;
+        $this->assertEquals(7, $result);
     }
 }

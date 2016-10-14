@@ -20,7 +20,7 @@
  * @author    Andreas Heigl<andreas@heigl.org>
  * @copyright Andreas Heigl
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @since     12.10.2016
+ * @since     14.10.2016
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
@@ -28,25 +28,34 @@ namespace Org_Heigl\TextStatisticsTests\Calculator;
 
 use Mockery as M;
 use Org_Heigl\TextStatistics\Calculator\AverageSentenceLengthCalculator;
-use Org_Heigl\TextStatistics\Calculator\AverageSyllablesPerWordCalculator;
-use Org_Heigl\TextStatistics\Calculator\FleschReadingEaseCalculator;
+use Org_Heigl\TextStatistics\Calculator\WienerSachtextFormel2Calculator;
+use Org_Heigl\TextStatistics\Calculator\WordsWithNCharsPercentCalculator;
+use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesPercentCalculator;
 use Org_Heigl\TextStatistics\Text;
 
 /** @runTestsInSeparateProcesses */
-class FleschReadingEaseCalculatorTest extends \PHPUnit_Framework_TestCase
+class WienerSachtextFormel2CalculatorTest extends \PHPUnit_Framework_TestCase
 {
-    public function testThatReadingEaseIsCalculatedProperly()
+    public function testThatCalculationWorksAsExpected()
     {
-        $averageSentenceLengthCalculator = M::mock('alias:' . AverageSentenceLengthCalculator::class);
-        $averageSentenceLengthCalculator->shouldReceive('calculate')->andReturn(5);
+        $percentWordsWithMoreThanThreeSyllables = M::mock('alias:' . WordsWithNSyllablesPercentCalculator::class);
+        $percentWordsWithMoreThanThreeSyllables->shouldReceive('calculate')->andReturn(10);
 
-        $averageSyllablesPerWordCalculator = M::mock('alias:' . AverageSyllablesPerWordCalculator::class);
-        $averageSyllablesPerWordCalculator->shouldReceive('calculate')->andReturn(1.5);
+        $averageSentenceLenght = M::mock('alias:' . AverageSentenceLengthCalculator::class);
+        $averageSentenceLenght->shouldReceive('calculate')->andReturn(4.5);
 
-        $text = new Text('Dieser text enthält die ein oder andere Silbe des Donaudampfschifffahrtskapitäns');
+        $percentWordsWithMoreThanSixChars = M::mock('alias:' . WordsWithNCharsPercentCalculator::class);
+        $percentWordsWithMoreThanSixChars->shouldReceive('calculate')->andReturn(12);
 
-        $fleshReadingEaseCalculator = new FleschReadingEaseCalculator($averageSentenceLengthCalculator, $averageSyllablesPerWordCalculator);
+        $text = new Text('Foo');
 
-        $this->assertEquals(74, (int) $fleshReadingEaseCalculator->calculate($text));
+        $calculator = new WienerSachtextFormel2Calculator(
+            $percentWordsWithMoreThanThreeSyllables,
+            $averageSentenceLenght,
+            $percentWordsWithMoreThanSixChars
+        );
+
+        $result = $calculator->calculate($text);
+        $this->assertEquals(1.63, round($result, 2));
     }
 }

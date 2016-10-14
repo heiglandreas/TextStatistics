@@ -20,43 +20,46 @@
  * @author    Andreas Heigl<andreas@heigl.org>
  * @copyright Andreas Heigl
  * @license   http://www.opensource.org/licenses/mit-license.php MIT-License
- * @since     13.10.2016
+ * @since     14.10.2016
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Calculator;
+namespace Org_Heigl\TextStatisticsTests\Calculator;
 
+use Mockery as M;
+use Org_Heigl\TextStatistics\Calculator\FleschReadingEaseCalculator;
+use Org_Heigl\TextStatistics\Calculator\FleschReadingEaseSchoolGradeCalculator;
 use Org_Heigl\TextStatistics\Text;
 
-class SentenceMaxSyllablesCalculator implements CalculatorInterface
+/** @runTestsInSeparateProcesses */
+class FleschREadingEaseSchoolGradeCalculatorTest extends \PHPUnit_Framework_TestCase
 {
-    protected $syllableCounter;
-
-    public function __construct(SyllableCounter $counter)
+    /** @dataProvider FleschReadingEaseSchoolGradeIsReturnedCorreectlyProvider */
+    public function testThatTheFleschReadingEaseSchoolGradeIsReturnedCorrectly($returnedValue, $expectedGrade)
     {
-        $this->syllableCounter = $counter;
+        $fleschReadingEaseCalculator = M::mock(FleschReadingEaseCalculator::class);
+        $fleschReadingEaseCalculator->shouldReceive('calculate')->andReturn($returnedValue);
+
+        $fcgl = new FleschReadingEaseSchoolGradeCalculator($fleschReadingEaseCalculator);
+
+        $result = $fcgl->calculate(new Text('Foo'));
+
+        $fleschReadingEaseCalculator->shouldHaveReceived('calculate')->once();
+        $this->assertEquals($expectedGrade, $result);
     }
 
-    /**
-     * Do the actual calculation of a statistic
-     *
-     * @param Text $text
-     *
-     * @return mixed
-     */
-    public function calculate(Text $text)
+    public function FleschReadingEaseSchoolGradeIsReturnedCorreectlyProvider()
     {
-        $result = preg_split('/[\.\!\?]\s/mu', $text->getPlainText());
-
-        $maxSyllables = 0;
-
-        foreach ($result as $sentence) {
-            $syllables = $this->syllableCounter->calculate(new Text($sentence));
-            if ($syllables > $maxSyllables) {
-                $maxSyllables = $syllables;
-            }
-        }
-
-        return $maxSyllables;
+        return [
+            [2, 'college graduate'],
+            [31, 'college'],
+            [51, 12],
+            [60.00001, 9],
+            [69.99999, 9],
+            [70, 9],
+            [80, 7],
+            [90, 6],
+            [90.01, 5],
+        ];
     }
 }

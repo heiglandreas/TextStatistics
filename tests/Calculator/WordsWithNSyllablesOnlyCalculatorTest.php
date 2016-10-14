@@ -24,39 +24,35 @@
  * @link      http://github.com/heiglandreas/org.heigl.TextStatistics
  */
 
-namespace Org_Heigl\TextStatistics\Calculator;
+namespace Org_Heigl\TextStatisticsTests\Calculator;
 
+use Org\Heigl\Hyphenator\Hyphenator;
+use Org\Heigl\Hyphenator\Options;
+use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesOnlyCounter;
 use Org_Heigl\TextStatistics\Text;
+use Org_Heigl\TextStatistics\Util\WordsWithNSyllablesOnlyFilter;
 
-class SentenceMaxSyllablesCalculator implements CalculatorInterface
+/** @runTestsInSeparateProcesses */
+class WordsWithNSyllablesOnlyCalculatorTest extends \PHPUnit_Framework_TestCase
 {
-    protected $syllableCounter;
-
-    public function __construct(SyllableCounter $counter)
+    public function testThatSyllableWordCounterWorks()
     {
-        $this->syllableCounter = $counter;
-    }
+        $text = new Text();
+        $text->setText('Dieser tExt enthält die ein oder andere Silbe des Donaudampfschifffahrtskapitäns');
 
-    /**
-     * Do the actual calculation of a statistic
-     *
-     * @param Text $text
-     *
-     * @return mixed
-     */
-    public function calculate(Text $text)
-    {
-        $result = preg_split('/[\.\!\?]\s/mu', $text->getPlainText());
+        $o = new Options();
+        $o->setCustomHyphen('-')
+          ->setDefaultLocale('de_DE')
+          ->setRightMin(2)
+          ->setLeftMin(2)
+          ->setWordMin(4)
+          ->setTokenizers('Whitespace', 'Punctuation');
 
-        $maxSyllables = 0;
+        $hyphenator = new Hyphenator();
+        $hyphenator->setOptions($o);
+        $hyphenator->addFilter(new WordsWithNSyllablesOnlyFilter(2));
 
-        foreach ($result as $sentence) {
-            $syllables = $this->syllableCounter->calculate(new Text($sentence));
-            if ($syllables > $maxSyllables) {
-                $maxSyllables = $syllables;
-            }
-        }
-
-        return $maxSyllables;
+        $calculator = new WordsWithNSyllablesOnlyCounter($hyphenator);
+        $this->assertEquals(3, $calculator->calculate($text));
     }
 }

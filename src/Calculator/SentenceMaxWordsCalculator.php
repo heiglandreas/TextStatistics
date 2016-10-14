@@ -32,9 +32,9 @@ class SentenceMaxWordsCalculator implements CalculatorInterface
 {
     protected $wordCounter;
 
-    public function __construct()
+    public function __construct(WordCounter $counter)
     {
-        $this->wordCounter = new WordCounter();
+        $this->wordCounter = $counter;
     }
 
     /**
@@ -46,7 +46,7 @@ class SentenceMaxWordsCalculator implements CalculatorInterface
      */
     public function calculate(Text $text)
     {
-        $result = preg_split('/\.\!\?/', $text->getPlainText());
+        $result = preg_split('/[\.\!\?]\s/mu', $text->getPlainText());
 
         $maxWords = 0;
 
