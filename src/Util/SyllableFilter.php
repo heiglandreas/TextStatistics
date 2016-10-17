@@ -44,7 +44,6 @@ class SyllableFilter extends Filter
     {
         foreach ($tokens as $token) {
             if (! $token instanceof t\WordToken) {
-                $tokens->replace($token, []);
                 continue;
             }
             $string = $token->getFilteredContent();
@@ -89,6 +88,9 @@ class SyllableFilter extends Filter
     {
         $syllables = [];
         foreach ($tokens as $token) {
+            if (! $token instanceof t\WordToken) {
+                continue;
+            }
             foreach ($token->getHyphenatedContent() as $syllable) {
                 $syllables[] = $syllable;
             }

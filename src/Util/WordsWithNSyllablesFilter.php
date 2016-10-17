@@ -50,7 +50,6 @@ class WordsWithNSyllablesFilter extends Filter
     {
         foreach ($tokens as $token) {
             if (! $token instanceof t\WordToken) {
-                $tokens->replace($token, []);
                 continue;
             }
             $string = $token->getFilteredContent();
@@ -99,6 +98,9 @@ class WordsWithNSyllablesFilter extends Filter
     {
         $wordsWithNSyllables = [];
         foreach ($tokens as $token) {
+            if (! $token instanceof t\WordToken) {
+                continue;
+            }
             if (! $token->getHyphenatedContent()) {
                 continue;
             }
