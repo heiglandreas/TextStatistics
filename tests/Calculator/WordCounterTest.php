@@ -37,12 +37,21 @@ use Org_Heigl\TextStatistics\Util\SyllableFilter;
 /** @runTestsInSeparateProcesses */
 class WordCounterTest extends \PHPUnit_Framework_TestCase
 {
-    public function testThatCountingWordsWorks()
+    /** @dataProvider wordCountProvider */
+    public function testThatCountingWordsWorks($text, $expectedCounter)
     {
-        $text = new Text('Dieser text enthält die ein oder andere Silbe des Donaudampfschifffahrtskapitäns');
+        $text = new Text($text);
 
         $calculator = new WordCounter();
 
-        $this->assertEquals(10, $calculator->calculate($text));
+        $this->assertEquals($expectedCounter, $calculator->calculate($text));
+    }
+
+    public function wordCountProvider()
+    {
+        return [
+            ['Dieser text enthält die ein oder andere Silbe des Donaudampfschifffahrtskapitäns', 10],
+            ['Anna-Maria', 2],
+        ];
     }
 }

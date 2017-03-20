@@ -68,10 +68,18 @@ class WienerSachtextFormel1Calculator implements CalculatorInterface
      */
     public function calculate(Text $text)
     {
-        return 0.1935 * $this->percentWordsWithMoreThanThreeSyllables->calculate($text)
-             + 0.1672 * $this->averageSentenceLenght->calculate($text)
-             + 0.1297 * $this->percentWordsWithMoreThanSixChars->calculate($text)
-             - 0.0327 * $this->percentSingleSyllableWords->calculate($text)
+        $percentWordsWithMoreThanThreeSyllables = $this->percentWordsWithMoreThanThreeSyllables->calculate($text);
+
+        $averageSentenceLenght = $this->averageSentenceLenght->calculate($text);
+
+        $percentWordsWithMoreThanSixChars = $this->percentWordsWithMoreThanSixChars->calculate($text);
+
+        $percentSingleSyllableWords = $this->percentSingleSyllableWords->calculate($text);
+
+        return 0.1935 * $percentWordsWithMoreThanThreeSyllables
+             + 0.1672 * $averageSentenceLenght
+             + 0.1297 * $percentWordsWithMoreThanSixChars
+             - 0.0327 * $percentSingleSyllableWords
              - 0.875;
     }
 }

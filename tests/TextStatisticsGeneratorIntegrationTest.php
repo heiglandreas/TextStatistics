@@ -28,50 +28,20 @@ namespace Org_Heigl\TextStatisticsTests;
 
 use Mockery as M;
 use Org_Heigl\TextStatistics\Calculator\CalculatorInterface;
+use Org_Heigl\TextStatistics\Service\WienerSachtextFormel1CalculatorFactory;
 use Org_Heigl\TextStatistics\Text;
 use Org_Heigl\TextStatistics\TextStatisticsGenerator;
 
-class TextStatisticsGeneratorTest extends \PHPUnit_Framework_TestCase
+class TextStatisticsGeneratorIntegrationTest extends \PHPUnit_Framework_TestCase
 {
-    public function testThatAddingACalculatorWorks()
+    public function testWienerSachtextFormel1Timing()
     {
-        $calculator = M::mock(CalculatorInterface::class);
+        $calculator = WienerSachtextFormel1CalculatorFactory::getCalculator();
 
-        $generator = new TextStatisticsGenerator();
+        $text = new Text(file_get_contents(__DIR__ . '/_assets/test.txt'));
+        $time = microtime(true);
+        $calculator->calculate($text);
 
-        $this->assertAttributeEmpty('calculators', $generator);
-
-        $generator->add('test', $calculator);
-        $this->assertAttributeEquals(['test' => $calculator], 'calculators', $generator);
-
-        $generator->add('test', $calculator);
-        $this->assertAttributeEquals(['test' => $calculator], 'calculators', $generator);
-
-        $generator->add('foo', $calculator);
-        $this->assertAttributeEquals([
-            'test' => $calculator,
-            'foo' => $calculator,
-        ], 'calculators',   $generator);
-    }
-
-    public function testThatGeneratorCalculates()
-    {
-        $calculator = M::mock(CalculatorInterface::class);
-        $calculator->shouldReceive('calculate')->andReturnValues([10, 20, 30]);
-
-        $generator = new TextStatisticsGenerator();
-
-        $generator->add('foo', $calculator);
-        $generator->add('bar', $calculator);
-        $generator->add('baz', $calculator);
-
-        $result = $generator->calculate(new Text('Testtext'));
-
-        $this->assertEquals([
-            'foo' => 10,
-            'bar' => 20,
-            'baz' => 30,
-        ], $result);
-
+        self::assertLessThan(15, round(microtime(true) - $time, 5));
     }
 }
