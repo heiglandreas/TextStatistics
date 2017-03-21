@@ -35,8 +35,10 @@ class WordsWithNSyllablesOnlyPercentCalculator implements CalculatorInterface
 
     protected $wordCounter;
 
-    public function __construct(WordsWithNSyllablesOnlyCounter $wordsWithNSyllablesOnlyCounter, WordCounter $wordCounter)
-    {
+    public function __construct(
+        WordsWithNSyllablesOnlyCounter $wordsWithNSyllablesOnlyCounter,
+        WordCounter $wordCounter
+    ) {
         $this->wordsWithNSyllablesOnlyCounter = $wordsWithNSyllablesOnlyCounter;
         $this->wordCounter = $wordCounter;
     }

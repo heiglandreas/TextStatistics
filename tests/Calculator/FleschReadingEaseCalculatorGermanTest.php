@@ -45,7 +45,10 @@ class FleschReadingEaseCalculatorGermanTest extends \PHPUnit_Framework_TestCase
 
         $text = new Text('Dieser text enthält die ein oder andere Silbe des Donaudampfschifffahrtskapitäns');
 
-        $fleshReadingEaseCalculator = new FleschReadingEaseCalculatorGerman($averageSentenceLengthCalculator, $averageSyllablesPerWordCalculator);
+        $fleshReadingEaseCalculator = new FleschReadingEaseCalculatorGerman(
+            $averageSentenceLengthCalculator,
+            $averageSyllablesPerWordCalculator
+        );
 
         $this->assertEquals(87, (int) $fleshReadingEaseCalculator->calculate($text));
     }

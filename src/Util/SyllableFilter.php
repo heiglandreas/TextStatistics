@@ -84,7 +84,7 @@ class SyllableFilter extends Filter
      *
      * @return mixed
      */
-    protected function _concatenate(t\TokenRegistry $tokens)
+    protected function _concatenate(t\TokenRegistry $tokens) // @codingStandardsIgnoreLine
     {
         $syllables = [];
         foreach ($tokens as $token) {

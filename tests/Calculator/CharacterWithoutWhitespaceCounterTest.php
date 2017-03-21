@@ -40,7 +40,11 @@ class CharacterWithoutWhitespaceCounterTest extends \PHPUnit_Framework_TestCase
 {
     public function testThatCountingcharactersWorksWithoutWhitespace()
     {
-        $text = new Text('Dieser text' . "\t" . 'enthält die ein oder andere Silbe des Donaudampfschifffahrtskapitäns');
+        $text = new Text(
+            'Dieser text' .
+            "\t" .
+            'enthält die ein oder andere Silbe des Donaudampfschifffahrtskapitäns'
+        );
 
         $calculator = new CharacterWithoutWhitespaceCounter();
 
