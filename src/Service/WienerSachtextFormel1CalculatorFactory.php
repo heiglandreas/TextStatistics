@@ -40,10 +40,16 @@ class WienerSachtextFormel1CalculatorFactory
     public static function getCalculator()
     {
         return new WienerSachtextFormel1Calculator(
-            new WordsWithNSyllablesPercentCalculator(WordsWithNSyllablesCounterFactory::getCalculator('de_DE', 3), WordCounterFactory::getCalculator()),
+            new WordsWithNSyllablesPercentCalculator(
+                WordsWithNSyllablesCounterFactory::getCalculator('de_DE', 3),
+                WordCounterFactory::getCalculator()
+            ),
             new AverageSentenceLengthCalculator(WordCounterFactory::getCalculator(), new SentenceCounter()),
             new WordsWithNCharsPercentCalculator(new WordsWithNCharsCounter(6), WordCounterFactory::getCalculator()),
-            new WordsWithNSyllablesOnlyPercentCalculator(WordsWithNSyllablesOnlyCounterFactory::getCalculator('de_DE', 1), WordCounterFactory::getCalculator())
+            new WordsWithNSyllablesOnlyPercentCalculator(
+                WordsWithNSyllablesOnlyCounterFactory::getCalculator('de_DE', 1),
+                WordCounterFactory::getCalculator()
+            )
         );
     }
 }

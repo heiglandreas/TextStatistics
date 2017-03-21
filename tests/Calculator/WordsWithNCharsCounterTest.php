@@ -40,5 +40,4 @@ class WordsWithNCharsCounterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(4, $calculator->calculate($text));
         $this->assertEquals(4, $calculator->calculate($text));
     }
-
 }

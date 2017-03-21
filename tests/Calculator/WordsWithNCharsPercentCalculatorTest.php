@@ -47,5 +47,4 @@ class WordsWithNCharsPercentCalculatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(22, $calculator->calculate(new Text('foo')));
     }
-
 }

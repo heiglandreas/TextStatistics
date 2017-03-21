@@ -94,7 +94,7 @@ class WordsWithNSyllablesFilter extends Filter
      *
      * @return mixed
      */
-    protected function _concatenate(t\TokenRegistry $tokens)
+    protected function _concatenate(t\TokenRegistry $tokens) // @codingStandardsIgnoreLine
     {
         $wordsWithNSyllables = [];
         foreach ($tokens as $token) {
