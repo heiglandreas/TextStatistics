@@ -41,7 +41,7 @@ class WordsWithNSyllablesCounterFactory
           ->setRightMin(2)
           ->setLeftMin(2)
           ->setWordMin(4)
-          ->setTokenizers('Whitespace', 'Punctuation');
+          ->setTokenizers('Whitespace, Punctuation');
 
         $hyphenator = new Hyphenator();
         $hyphenator->setOptions($o);

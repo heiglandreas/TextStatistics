@@ -32,20 +32,22 @@ use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
 use Org_Heigl\TextStatistics\Text;
 use Org_Heigl\TextStatistics\Util\SyllableFilter;
 
+/** @runTestsInSeparateProcesses */
 class SyllableCounterTest extends \PHPUnit_Framework_TestCase
 {
-    public function testThatCountingSyllablesWorks()
+    /** @dataProvider countingSyllablesProvider */
+    public function testThatCountingSyllablesWorks($providedText, $expectedCount, $locale = 'de_DE')
     {
         $text = new Text();
-        $text->setText('Dieser tExt enthält die ein oder andere Silbe des Donaudampfschifffahrtskapitäns');
+        $text->setText($providedText);
 
         $o = new Options();
         $o->setCustomHyphen('-')
-          ->setDefaultLocale('de_DE')
+          ->setDefaultLocale($locale)
           ->setRightMin(2)
           ->setLeftMin(2)
           ->setWordMin(4)
-          ->setTokenizers('Whitespace', 'Punctuation');
+          ->setTokenizers('Whitespace, Punctuation');
 
         $hyphenator = new Hyphenator();
         $hyphenator->setOptions($o);
@@ -53,6 +55,14 @@ class SyllableCounterTest extends \PHPUnit_Framework_TestCase
 
         $calculator = new SyllableCounter($hyphenator);
 
-        $this->assertEquals(22, $calculator->calculate($text));
+        self::assertEquals($expectedCount, $calculator->calculate($text));
+    }
+
+    public function countingSyllablesProvider()
+    {
+        return [
+            ['Dieser tExt enthält die ein oder andere Silbe des Donaudampfschifffahrtskapitäns', 22, 'de_DE'],
+            ['Anna-Maria', 4],
+        ];
     }
 }
