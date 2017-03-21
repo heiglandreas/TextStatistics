@@ -47,5 +47,4 @@ class WordsWithNSyllablesOnlyPercentCalculatorTest extends \PHPUnit_Framework_Te
 
         $this->assertEquals(22, $calculator->calculate(new Text('foo')));
     }
-
 }

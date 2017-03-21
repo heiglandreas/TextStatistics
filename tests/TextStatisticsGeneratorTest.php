@@ -51,7 +51,7 @@ class TextStatisticsGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertAttributeEquals([
             'test' => $calculator,
             'foo' => $calculator,
-        ], 'calculators',   $generator);
+        ], 'calculators', $generator);
     }
 
     public function testThatGeneratorCalculates()
@@ -72,6 +72,5 @@ class TextStatisticsGeneratorTest extends \PHPUnit_Framework_TestCase
             'bar' => 20,
             'baz' => 30,
         ], $result);
-
     }
 }

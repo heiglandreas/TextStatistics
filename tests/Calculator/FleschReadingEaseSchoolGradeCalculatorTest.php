@@ -32,10 +32,10 @@ use Org_Heigl\TextStatistics\Calculator\FleschReadingEaseSchoolGradeCalculator;
 use Org_Heigl\TextStatistics\Text;
 
 /** @runTestsInSeparateProcesses */
-class FleschREadingEaseSchoolGradeCalculatorTest extends \PHPUnit_Framework_TestCase
+class FleschReadingEaseSchoolGradeCalculatorTest extends \PHPUnit_Framework_TestCase
 {
-    /** @dataProvider FleschReadingEaseSchoolGradeIsReturnedCorreectlyProvider */
-    public function testThatTheFleschReadingEaseSchoolGradeIsReturnedCorrectly($returnedValue, $expectedGrade)
+    /** @dataProvider fleschReadingEaseSchoolGradeIsReturnedCorreectlyProvider */
+    public function testFleschReadingEaseSchoolGradeIsReturnedCorrectly($returnedValue, $expectedGrade)
     {
         $fleschReadingEaseCalculator = M::mock(FleschReadingEaseCalculator::class);
         $fleschReadingEaseCalculator->shouldReceive('calculate')->andReturn($returnedValue);
@@ -48,7 +48,7 @@ class FleschREadingEaseSchoolGradeCalculatorTest extends \PHPUnit_Framework_Test
         $this->assertEquals($expectedGrade, $result);
     }
 
-    public function FleschReadingEaseSchoolGradeIsReturnedCorreectlyProvider()
+    public function fleschReadingEaseSchoolGradeIsReturnedCorreectlyProvider()
     {
         return [
             [2, 'college graduate'],
