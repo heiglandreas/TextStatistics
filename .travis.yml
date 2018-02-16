@@ -1,34 +1,44 @@
 sudo: false
 language: php
+
+php:
+- 7.0
+- 7.1
+- 7.2
+- nightly
+
 matrix:
-  include:
-  - php: 5.6
-  - php: 7
-    env:
-    - EXECUTE_CS_CHECK=true
-    - EXECUTE_TEST_COVERALLS=true
-  - php: 7.1
-  - php: hhvm
-  - php: nightly
+  fast_finish: true
   allow_failures:
-  - php: hhvm
   - php: nightly
 
+stages:
+- check
+- test
+
+jobs:
+  include:
+  - stage: check
+    php: 7.2
+    script:
+    - composer cs-check
+  - stage: test
+  - stage: coverage
+    if: branch = master AND type = push
+    php: 7.2
+    env: TEST_COVERAGE=true
+    script:
+    after_script:
+    - travis_retry composer require $COMPOSER_ARGS --dev satooshi/php-coveralls ;
+    - composer test-coverage
+    - travis_retry composer upload-coverage
+
 before_install:
-  - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then phpenv config-rm xdebug.ini ||
-    return 0 ; fi
-  - composer self-update
-  - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then composer require --dev --no-update
-    satooshi/php-coveralls ; fi
-  - if [[ $EXECUTE_CS_CHECK == 'true' ]]; then composer require --dev --no-update
-    friendsofphp/php-cs-fixer ; fi
+- travis_retry composer self-update
+- if [[ $TEST_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
+
 install:
-  - travis_retry composer install --no-interaction --ignore-platform-reqs
+- travis_retry composer update
+
 script:
-  - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then ./vendor/bin/phpunit -c phpunit.travis.xml
-    --coverage-clover clover.xml ; fi
-  - if [[ $EXECUTE_TEST_COVERALLS != 'true' ]]; then ./vendor/bin/phpunit -c phpunit.travis.xml;
-    fi
-  - if [[ $EXECUTE_CS_CHECK == 'true' ]]; then ./vendor/bin/phpcs ; fi
-after_script:
-  - if [[ $EXECUTE_TEST_COVERALLS == 'true' ]]; then ./vendor/bin/coveralls ; fi
+- composer test

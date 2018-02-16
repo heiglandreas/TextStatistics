@@ -3,6 +3,7 @@
     "description": "Get statistics from a given text",
     "type": "Library",
     "require": {
+        "php": "^7.0",
         "org_heigl/hyphenator": "^2.3"
     },
     "license": "MIT",
@@ -26,5 +27,32 @@
         "phpunit/phpunit": "^5.6",
         "mockery/mockery": "^0.9.5",
         "squizlabs/php_codesniffer": "^2.8"
+    },
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "upload-coverage": [
+            "curl -o coveralls -L https://github.com/php-coveralls/php-coveralls/releases/download/v2.0.0/php-coveralls.phar",
+            "chmod 755 coveralls",
+            "./coveralls -v"
+        ],
+        "cs-download" : [
+            "curl -o phpcs -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar",
+            "curl -o phpcs.asc -L https://github.com/squizlabs/PHP_CodeSniffer/releases/download/3.2.2/phpcs.phar.asc",
+            "# gpg --verify phpcs.asc phpcs",
+            "chmod 755 phpcs"
+        ],
+        "cs-check": [
+            "@cs-download",
+            "./phpcs --version && ./phpcs"
+        ],
+        "cs-fix": [
+            "@cs-download",
+            "./phpcs"
+        ],
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-clover clover.xml"
     }
 }
