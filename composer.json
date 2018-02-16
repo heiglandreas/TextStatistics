@@ -3,7 +3,7 @@
     "description": "Get statistics from a given text",
     "type": "Library",
     "require": {
-        "php": "^7.0",
+        "php": "^6.0",
         "org_heigl/hyphenator": "^2.3"
     },
     "license": "MIT",
