@@ -31,9 +31,10 @@ use Org_Heigl\TextStatistics\Calculator\AverageSentenceLengthCalculator;
 use Org_Heigl\TextStatistics\Calculator\WienerSachtextFormel4Calculator;
 use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesPercentCalculator;
 use Org_Heigl\TextStatistics\Text;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class WienerSachtextFormel4CalculatorTest extends \PHPUnit_Framework_TestCase
+class WienerSachtextFormel4CalculatorTest extends TestCase
 {
     public function testThatCalculationWorksAsExpected()
     {

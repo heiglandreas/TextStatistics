@@ -26,13 +26,11 @@
 
 namespace Org_Heigl\TextStatisticsTests;
 
-use Mockery as M;
-use Org_Heigl\TextStatistics\Calculator\CalculatorInterface;
 use Org_Heigl\TextStatistics\Service\WienerSachtextFormel1CalculatorFactory;
 use Org_Heigl\TextStatistics\Text;
-use Org_Heigl\TextStatistics\TextStatisticsGenerator;
+use PHPUnit\Framework\TestCase;
 
-class TextStatisticsGeneratorIntegrationTest extends \PHPUnit_Framework_TestCase
+class TextStatisticsGeneratorIntegrationTest extends TestCase
 {
     public function testWienerSachtextFormel1Timing()
     {

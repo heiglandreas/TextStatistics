@@ -31,9 +31,10 @@ use Org_Heigl\TextStatistics\Calculator\AverageSyllablesPerWordCalculator;
 use Org_Heigl\TextStatistics\Calculator\FleschKincaidGradeLevelCalculator;
 use Mockery as M;
 use Org_Heigl\TextStatistics\Text;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class FleschKincaidGradeLevelCalculatorTest extends \PHPUnit_Framework_TestCase
+class FleschKincaidGradeLevelCalculatorTest extends TestCase
 {
     public function testThatTheFleschKincaidGradeLevelIsReturnedCorreectly()
     {

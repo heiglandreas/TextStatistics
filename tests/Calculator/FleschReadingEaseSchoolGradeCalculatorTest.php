@@ -30,9 +30,10 @@ use Mockery as M;
 use Org_Heigl\TextStatistics\Calculator\FleschReadingEaseCalculator;
 use Org_Heigl\TextStatistics\Calculator\FleschReadingEaseSchoolGradeCalculator;
 use Org_Heigl\TextStatistics\Text;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class FleschReadingEaseSchoolGradeCalculatorTest extends \PHPUnit_Framework_TestCase
+class FleschReadingEaseSchoolGradeCalculatorTest extends TestCase
 {
     /** @dataProvider fleschReadingEaseSchoolGradeIsReturnedCorreectlyProvider */
     public function testFleschReadingEaseSchoolGradeIsReturnedCorrectly($returnedValue, $expectedGrade)

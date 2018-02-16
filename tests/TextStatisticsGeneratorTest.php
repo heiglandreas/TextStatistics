@@ -30,8 +30,9 @@ use Mockery as M;
 use Org_Heigl\TextStatistics\Calculator\CalculatorInterface;
 use Org_Heigl\TextStatistics\Text;
 use Org_Heigl\TextStatistics\TextStatisticsGenerator;
+use PHPUnit\Framework\TestCase;
 
-class TextStatisticsGeneratorTest extends \PHPUnit_Framework_TestCase
+class TextStatisticsGeneratorTest extends TestCase
 {
     public function testThatAddingACalculatorWorks()
     {

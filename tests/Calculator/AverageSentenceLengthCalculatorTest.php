@@ -28,14 +28,13 @@ namespace Org_Heigl\TextStatisticsTests\Calculator;
 
 use Mockery as M;
 use Org_Heigl\TextStatistics\Calculator\AverageSentenceLengthCalculator;
-use Org_Heigl\TextStatistics\Calculator\AverageSyllablesPerWordCalculator;
-use Org_Heigl\TextStatistics\Calculator\FleschReadingEaseCalculator;
 use Org_Heigl\TextStatistics\Calculator\SentenceCounter;
 use Org_Heigl\TextStatistics\Calculator\WordCounter;
 use Org_Heigl\TextStatistics\Text;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class AverageSentenceLengthCalculatorTest extends \PHPUnit_Framework_TestCase
+class AverageSentenceLengthCalculatorTest extends TestCase
 {
     public function testThatReadingEaseIsCalculatedProperly()
     {

@@ -31,9 +31,10 @@ use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesOnlyCounter;
 use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesOnlyPercentCalculator;
 use Org_Heigl\TextStatistics\Text;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class WordsWithNSyllablesOnlyPercentCalculatorTest extends \PHPUnit_Framework_TestCase
+class WordsWithNSyllablesOnlyPercentCalculatorTest extends TestCase
 {
     public function testThatCountingWordsWithNCharactersWorksAsExpected()
     {

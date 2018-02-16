@@ -31,9 +31,10 @@ use Org_Heigl\TextStatistics\Calculator\WordsWithNCharsCounter;
 use Org_Heigl\TextStatistics\Calculator\WordsWithNCharsPercentCalculator;
 use Org_Heigl\TextStatistics\Text;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class WordsWithNCharsPercentCalculatorTest extends \PHPUnit_Framework_TestCase
+class WordsWithNCharsPercentCalculatorTest extends TestCase
 {
     public function testThatCountingWordsWithNCharactersWorksAsExpected()
     {

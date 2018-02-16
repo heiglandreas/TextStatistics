@@ -28,12 +28,12 @@ namespace Org_Heigl\TextStatisticsTests\Calculator;
 
 use Org_Heigl\TextStatistics\Calculator\SentenceMaxSyllablesCalculator;
 use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
-use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesCounter;
 use Mockery as M;
 use Org_Heigl\TextStatistics\Text;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class SentenceMaxSyllablesCalculatorTest extends \PHPUnit_Framework_TestCase
+class SentenceMaxSyllablesCalculatorTest extends TestCase
 {
     public function testThatSyllableWordCounterWorks()
     {

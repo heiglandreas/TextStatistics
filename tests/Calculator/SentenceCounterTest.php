@@ -28,8 +28,9 @@ namespace Org_Heigl\TextStatisticsTests\Calculator;
 
 use Org_Heigl\TextStatistics\Calculator\SentenceCounter;
 use Org_Heigl\TextStatistics\Text;
+use PHPUnit\Framework\TestCase;
 
-class SentenceCounterTest extends \PHPUnit_Framework_TestCase
+class SentenceCounterTest extends TestCase
 {
     public function testThatCountingWordsWorks()
     {

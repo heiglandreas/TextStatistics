@@ -30,8 +30,9 @@ use Org_Heigl\TextStatistics\Calculator\AverageReadingDurationCalculator;
 use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
 use Mockery as  M;
 use Org_Heigl\TextStatistics\Text;
+use PHPUnit\Framework\TestCase;
 
-class AverageReadingDurationCalculatorTest extends \PHPUnit_Framework_TestCase
+class AverageReadingDurationCalculatorTest extends TestCase
 {
     public function testThatReadingDurationIsCorrect()
     {

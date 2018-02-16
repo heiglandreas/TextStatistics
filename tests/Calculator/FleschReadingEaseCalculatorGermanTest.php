@@ -31,9 +31,10 @@ use Org_Heigl\TextStatistics\Calculator\AverageSentenceLengthCalculator;
 use Org_Heigl\TextStatistics\Calculator\AverageSyllablesPerWordCalculator;
 use Org_Heigl\TextStatistics\Calculator\FleschReadingEaseCalculatorGerman;
 use Org_Heigl\TextStatistics\Text;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class FleschReadingEaseCalculatorGermanTest extends \PHPUnit_Framework_TestCase
+class FleschReadingEaseCalculatorGermanTest extends TestCase
 {
     public function testThatReadingEaseIsCalculatedProperly()
     {

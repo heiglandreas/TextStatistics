@@ -15,6 +15,7 @@ matrix:
 stages:
 - check
 - test
+- coverage
 
 jobs:
   include:

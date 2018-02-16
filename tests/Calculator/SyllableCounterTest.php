@@ -31,9 +31,10 @@ use Org\Heigl\Hyphenator\Options;
 use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
 use Org_Heigl\TextStatistics\Text;
 use Org_Heigl\TextStatistics\Util\SyllableFilter;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class SyllableCounterTest extends \PHPUnit_Framework_TestCase
+class SyllableCounterTest extends TestCase
 {
     /** @dataProvider countingSyllablesProvider */
     public function testThatCountingSyllablesWorks($providedText, $expectedCount, $locale = 'de_DE')

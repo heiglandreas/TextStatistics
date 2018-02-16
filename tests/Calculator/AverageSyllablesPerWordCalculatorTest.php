@@ -27,14 +27,14 @@
 namespace Org_Heigl\TextStatisticsTests\Calculator;
 
 use Mockery as M;
-use Org_Heigl\TextStatistics\Calculator\AverageSentenceLengthCalculator;
 use Org_Heigl\TextStatistics\Calculator\AverageSyllablesPerWordCalculator;
 use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
 use Org_Heigl\TextStatistics\Calculator\WordCounter;
 use Org_Heigl\TextStatistics\Text;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class AverageSyllablesPerWordCalculatorTest extends \PHPUnit_Framework_TestCase
+class AverageSyllablesPerWordCalculatorTest extends TestCase
 {
     public function testThatSyllablesPerWordAreCalculatedProperly()
     {

@@ -31,9 +31,10 @@ use Org\Heigl\Hyphenator\Options;
 use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesCounter;
 use Org_Heigl\TextStatistics\Text;
 use Org_Heigl\TextStatistics\Util\WordsWithNSyllablesFilter;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class WordsWithNSyllablesCounterTest extends \PHPUnit_Framework_TestCase
+class WordsWithNSyllablesCounterTest extends TestCase
 {
     public function testThatSyllableWordCounterWorks()
     {

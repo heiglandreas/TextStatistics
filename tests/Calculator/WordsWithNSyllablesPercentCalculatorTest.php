@@ -31,9 +31,10 @@ use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesCounter;
 use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesPercentCalculator;
 use Org_Heigl\TextStatistics\Text;
 use Mockery as M;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class WordsWithNSyllablesPercentCalculatorTest extends \PHPUnit_Framework_TestCase
+class WordsWithNSyllablesPercentCalculatorTest extends TestCase
 {
     public function testThatSyllablePercentageCounterWorks()
     {

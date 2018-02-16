@@ -33,9 +33,10 @@ use Org_Heigl\TextStatistics\Calculator\WordsWithNCharsPercentCalculator;
 use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesOnlyPercentCalculator;
 use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesPercentCalculator;
 use Org_Heigl\TextStatistics\Text;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class WienerSachtextFormel1CalculatorTest extends \PHPUnit_Framework_TestCase
+class WienerSachtextFormel1CalculatorTest extends TestCase
 {
     public function testThatCalculationWorksAsExpected()
     {

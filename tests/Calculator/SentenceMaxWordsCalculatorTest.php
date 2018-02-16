@@ -26,16 +26,14 @@
 
 namespace Org_Heigl\TextStatisticsTests\Calculator;
 
-use Org_Heigl\TextStatistics\Calculator\SentenceMaxSyllablesCalculator;
 use Org_Heigl\TextStatistics\Calculator\SentenceMaxWordsCalculator;
-use Org_Heigl\TextStatistics\Calculator\SyllableCounter;
 use Org_Heigl\TextStatistics\Calculator\WordCounter;
-use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesCounter;
 use Mockery as M;
 use Org_Heigl\TextStatistics\Text;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class SentenceMaxWordsCalculatorTest extends \PHPUnit_Framework_TestCase
+class SentenceMaxWordsCalculatorTest extends TestCase
 {
     public function testThatMaxWordCalculatorWorks()
     {

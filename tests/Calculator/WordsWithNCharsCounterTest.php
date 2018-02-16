@@ -28,8 +28,9 @@ namespace Org_Heigl\TextStatisticsTests\Calculator;
 
 use Org_Heigl\TextStatistics\Calculator\WordsWithNCharsCounter;
 use Org_Heigl\TextStatistics\Text;
+use PHPUnit\Framework\TestCase;
 
-class WordsWithNCharsCounterTest extends \PHPUnit_Framework_TestCase
+class WordsWithNCharsCounterTest extends TestCase
 {
     public function testThatCountingWordsWithNCharactersWorksAsExpected()
     {

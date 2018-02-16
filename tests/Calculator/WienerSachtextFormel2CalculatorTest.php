@@ -32,9 +32,10 @@ use Org_Heigl\TextStatistics\Calculator\WienerSachtextFormel2Calculator;
 use Org_Heigl\TextStatistics\Calculator\WordsWithNCharsPercentCalculator;
 use Org_Heigl\TextStatistics\Calculator\WordsWithNSyllablesPercentCalculator;
 use Org_Heigl\TextStatistics\Text;
+use PHPUnit\Framework\TestCase;
 
 /** @runTestsInSeparateProcesses */
-class WienerSachtextFormel2CalculatorTest extends \PHPUnit_Framework_TestCase
+class WienerSachtextFormel2CalculatorTest extends TestCase
 {
     public function testThatCalculationWorksAsExpected()
     {
