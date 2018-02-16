@@ -59,10 +59,10 @@ class WordsWithNSyllablesFilter extends Filter
             $syllables = array();
             for ($i = 1; $i <= $length; $i++) {
                 $currPattern = mb_substr($pattern, $i, 1);
-                if ($i < $this->_options->getLeftMin()) {
+                if ($i < $this->options->getLeftMin()) {
                     continue;
                 }
-                if ($i > $length - $this->_options->getRightMin()) {
+                if ($i > $length - $this->options->getRightMin()) {
                     continue;
                 }
                 if (0 == $currPattern) {
@@ -94,7 +94,7 @@ class WordsWithNSyllablesFilter extends Filter
      *
      * @return mixed
      */
-    protected function _concatenate(t\TokenRegistry $tokens) // @codingStandardsIgnoreLine
+    protected function doConcatenate(t\TokenRegistry $tokens) // @codingStandardsIgnoreLine
     {
         $wordsWithNSyllables = [];
         foreach ($tokens as $token) {
