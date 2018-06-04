@@ -48,6 +48,7 @@ class WordCounterTest extends TestCase
         return [
             ['Dieser text enthält die ein oder andere Silbe des Donaudampfschifffahrtskapitäns', 10],
             ['Anna-Maria', 2],
+            ['Dieser text, enthält die ein oder andere. Silbe des: Donaudampfschifffahrtskapitäns', 10],
         ];
     }
 }
